@@ -1,0 +1,61 @@
+import collections
+
+#represents individual cards and creates class with no methods
+Card = collections.namedtuple('Card', ['rank', 'suit'])
+
+class FrenchDeck:
+  ranks = [str(n) for n in range(2,11)] + list('JQKA')
+  suits = 'spades diamonds clubs hearts'.split()
+  
+  def __init__(self):
+    self._cards = [Card(rank, suit) for suit in self.suits
+                                    for rank in self.ranks]
+#returns number of items in deck                                    
+  def __len__(self):
+    return len(self._cards)
+    
+#reads specific cards    
+  def __getitem__(self, posititon):
+    return self._cards[position]
+
+    
+beer_card = Card('7', 'diamonds')
+beer_card
+
+deck = FrenchDeck()
+len(deck)
+
+deck[0]
+deck[-1]
+
+from random import choice
+  choice(deck)
+  choice(deck)
+  choice(deck)
+
+#top 3 cards from a brand new deck
+deck[:3]
+#aces only 12th index skipping 13 cards at a time
+deck[12::13]
+
+#deck is iterable
+for card in deck: 
+  print(card)
+  
+#deck iterable in reverse
+for card in reversed(deck):
+  print(card)
+  
+#no "__contains__" method, in operator does the same as said method  
+  Card('Q', 'hearts') in deck
+  Card('7', beasts') in deck
+
+#sorting
+suit_values = dict(spades=3, hearts=2, diamonds=1, clubs=0)
+
+def spades_high(card):
+  rank_value = FrenchDeck.ranks.index(card.rank)
+  return rank_value * len(suit_values) + suit_values[card.suit]
+  
+for card in sorted(deck, key=spades_high):
+  print(card)
